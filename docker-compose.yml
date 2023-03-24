@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  nginx-proxy:
+    image: nginx:stable-alpine
+    container_name: nginx-proxy
+    ports:
+      - "443:443"
+    restart: always
+    volumes:
+      - "./config/nginx.conf:/etc/nginx/conf.d/nginx.conf"
+      - "./config/http.conf:/etc/nginx/nginx.conf"
+      - "./cert/:/cert/"
+      - "./cache/:/var/www/cache"
+    networks:
+      - nginx_proxy
+    environment:
+      - TZ=Asia/Seoul
+networks:
+  nginx_proxy:
+    driver: bridge
